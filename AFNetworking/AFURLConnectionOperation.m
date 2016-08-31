@@ -294,7 +294,7 @@ static BOOL AFSecKeyIsEqualToKey(SecKeyRef key1, SecKeyRef key2) {
     
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     if (_backgroundTaskIdentifier) {
-        [[UIApplication sharedApplication] endBackgroundTask:_backgroundTaskIdentifier];
+        //[[UIApplication sharedApplication] endBackgroundTask:_backgroundTaskIdentifier];
         _backgroundTaskIdentifier = UIBackgroundTaskInvalid;
     }
 #endif
@@ -356,24 +356,24 @@ static BOOL AFSecKeyIsEqualToKey(SecKeyRef key1, SecKeyRef key2) {
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 - (void)setShouldExecuteAsBackgroundTaskWithExpirationHandler:(void (^)(void))handler {
     [self.lock lock];
-    if (!self.backgroundTaskIdentifier) {
-        UIApplication *application = [UIApplication sharedApplication];
-        __weak __typeof(&*self)weakSelf = self;
-        self.backgroundTaskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^{
-            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
-            
-            if (handler) {
-                handler();
-            }
-            
-            if (strongSelf) {
-                [strongSelf cancel];
-                
-                [application endBackgroundTask:strongSelf.backgroundTaskIdentifier];
-                strongSelf.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
-            }
-        }];
-    }
+//    if (!self.backgroundTaskIdentifier) {
+//        UIApplication *application = [UIApplication sharedApplication];
+//        __weak __typeof(&*self)weakSelf = self;
+//        self.backgroundTaskIdentifier = [application beginBackgroundTaskWithExpirationHandler:^{
+//            __strong __typeof(&*weakSelf)strongSelf = weakSelf;
+//            
+//            if (handler) {
+//                handler();
+//            }
+//            
+//            if (strongSelf) {
+//                [strongSelf cancel];
+//                
+//                [application endBackgroundTask:strongSelf.backgroundTaskIdentifier];
+//                strongSelf.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
+//            }
+//        }];
+//    }
     [self.lock unlock];
 }
 #endif
